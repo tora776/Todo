@@ -5,15 +5,31 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="ui.MainActivity">
 
-    <TextView
+    <!--TODO:TaskListFragmentを追加する-->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/task_list_fragment_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.todolistapp.ui.TaskListFragment"/>
+
+
+    <!--TODO:+画像を追加する-->
+    <!--TODO:表示位置がおかしい-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_task_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="end|bottom"
+        app:tint="@color/white"
+        android:src=""
+        android:backgroundTint="#E91E63"
+        android:layout_margin="16dp"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

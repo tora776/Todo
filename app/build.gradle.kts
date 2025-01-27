@@ -78,4 +78,9 @@ dependencies {
     implementation("io.reactivex.rxjava3:rxjava:3.1.5")
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
 
+    // RecyclerView ライブラリ
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    // For control over item selection of both touch and mouse driven selection
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+
 }
