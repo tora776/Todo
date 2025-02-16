@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
-public class TaskListFragment extends Fragment implements DeleteTaskListener {
+public class TaskListFragment extends Fragment implements TaskListener {
     private final static String TAG = "TaskListFragment";
     private RecyclerView mTaskListRecyclerView;
     private TaskAdapter mAdapter;
@@ -42,12 +42,10 @@ public class TaskListFragment extends Fragment implements DeleteTaskListener {
 
         mTaskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         mTaskListRecyclerView = (RecyclerView) view.findViewById(R.id.task_list_view);
-        // TODO:アダプターをRecyclerViewと紐づける
         mAdapter = new TaskAdapter();
         mAdapter.setDeleteTaskListener(this);
+        mAdapter.setUpdateTaskListener(this);
         mTaskListRecyclerView.setAdapter(mAdapter);
-
-
 
         return view;
     }
@@ -66,6 +64,17 @@ public class TaskListFragment extends Fragment implements DeleteTaskListener {
 
     @Override
     public void onClickDeleteTask(int position){
+        mDisposable.add(mTaskViewModel.deleteTask(position)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {}
+                        , throwable -> Log.e(TAG, "Unable to delete.", throwable)));
+
+    }
+
+    // 動作確認のため削除処理を記載。TODO:Update処理に変更(ダイアログ表示してテキスト変更)
+    @Override
+    public void onClickUpdateTask(int position){
         mDisposable.add(mTaskViewModel.deleteTask(position)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

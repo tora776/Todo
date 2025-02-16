@@ -21,7 +21,8 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     // Taskリストの一覧
     private List<String> mData;
-    private DeleteTaskListener mListener;
+    private TaskListener mDeleteListener;
+    private TaskListener mUpdateListener;
 
     public TaskAdapter(){
         this.mData = new ArrayList<>();
@@ -31,9 +32,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return mData.size();
     }
 
-    public void setDeleteTaskListener(DeleteTaskListener listener){
-        mListener = listener;
+    public void setDeleteTaskListener(TaskListener listener){
+        mDeleteListener = listener;
     }
+
+    public void setUpdateTaskListener(TaskListener listener){ mUpdateListener = listener; }
 
     public void setData(List<String> data){
         mData = data;
@@ -52,10 +55,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position){
         holder.getTaskTextView().setText(mData.get(position));
+        // 削除ボタン押下時
         holder.getDeleteTaskButton().setTag(position);
         holder.getDeleteTaskButton().setOnClickListener(v -> {
-            if (mListener != null) {
-                mListener.onClickDeleteTask(position);
+            if (mDeleteListener != null) {
+                mDeleteListener.onClickDeleteTask(position);
+            }
+        });
+        // 更新ボタン押下時
+        holder.getUpdateTaskButton().setTag(position);
+        holder.getUpdateTaskButton().setOnClickListener(v -> {
+            if (mUpdateListener != null){
+                mUpdateListener.onClickUpdateTask(position);
             }
         });
     }
@@ -63,10 +74,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView mTaskTextView;
         private final Button mDeleteTaskButton;
+        private final Button mUpdateTaskButton;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             mTaskTextView = (TextView) itemView.findViewById(R.id.task_text);
             mDeleteTaskButton = (Button) itemView.findViewById(R.id.delete_task_button);
+            mUpdateTaskButton = (Button) itemView.findViewById(R.id.update_task_button);
         }
 
         public TextView getTaskTextView() {
@@ -75,6 +88,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         public Button getDeleteTaskButton() {
             return mDeleteTaskButton;
+        }
+
+        public Button getUpdateTaskButton() {
+            return mUpdateTaskButton;
         }
     }
 }
