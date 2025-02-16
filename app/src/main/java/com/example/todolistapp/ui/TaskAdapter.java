@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,16 +54,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.getTaskTextView().setText(mData.get(position));
         holder.getDeleteTaskButton().setTag(position);
         holder.getDeleteTaskButton().setOnClickListener(v -> {
-            // TODO:TaskListFragmentを呼び出したい
             if (mListener != null) {
                 mListener.onClickDeleteTask(position);
             }
         });
     }
 
-
-
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView mTaskTextView;
         private final Button mDeleteTaskButton;
         public ViewHolder(@NonNull View itemView){

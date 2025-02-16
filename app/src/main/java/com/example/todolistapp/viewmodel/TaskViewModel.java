@@ -13,8 +13,9 @@ import com.example.todolistapp.db.TaskEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 
 /*
     タスクのデータをデータレイヤーから取得して保持する
@@ -25,7 +26,6 @@ public class TaskViewModel extends AndroidViewModel {
     private List<TaskEntity> mTasks;
     public TaskViewModel(@NonNull Application application){
         super(application);
-        // TODO: アプリケーションから取得できるようにする。
         mTaskDao = ((AppComponent)application).getDatabase().taskDao();
     }
 
@@ -55,4 +55,6 @@ public class TaskViewModel extends AndroidViewModel {
     public Completable deleteTask(int position){
         return mTaskDao.delete(mTasks.get(position));
     }
+
+
 }
