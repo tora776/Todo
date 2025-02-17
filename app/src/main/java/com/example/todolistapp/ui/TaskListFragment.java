@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolistapp.R;
 import com.example.todolistapp.viewmodel.TaskViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -75,11 +76,10 @@ public class TaskListFragment extends Fragment implements TaskListener {
     // 動作確認のため削除処理を記載。TODO:Update処理に変更(ダイアログ表示してテキスト変更)
     @Override
     public void onClickUpdateTask(int position){
-        mDisposable.add(mTaskViewModel.deleteTask(position)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {}
-                        , throwable -> Log.e(TAG, "Unable to delete.", throwable)));
-
+        Bundle args = new Bundle();
+        args.putInt("POSITION", position);
+        UpdateTaskDialogFragment dialog = new UpdateTaskDialogFragment();
+        dialog.setArguments(args);
+        dialog.show(requireActivity().getSupportFragmentManager(), "UpdateTaskDialogFragment");
     }
 }

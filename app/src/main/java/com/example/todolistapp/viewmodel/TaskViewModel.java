@@ -49,12 +49,20 @@ public class TaskViewModel extends AndroidViewModel {
         return mTaskDao.insert(task);
     }
 
+    // TODO:updateされない
+    public Completable updateTask(int position, String text){
+        TaskEntity task = new TaskEntity();
+        task.setId(position);
+        task.setText(text);
+        System.out.print(task.getText());
+        return mTaskDao.update(task);
+    }
+
     /**
         @param position 削除したいタスクのリスト内のインデックス
      */
     public Completable deleteTask(int position){
         return mTaskDao.delete(mTasks.get(position));
     }
-
 
 }
