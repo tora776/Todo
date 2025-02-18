@@ -13,16 +13,16 @@ import androidx.room.RoomDatabase;
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance;
     public static final String DATABASE_NAME = "mydb";
-
     public abstract TaskDao taskDao();
 
     public static AppDatabase getInstance(final Context context){
         if(sInstance == null){
             synchronized(AppDatabase.class) {
-                sInstance = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME).build();
+                sInstance = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
+                        .build();
             }
         }
-
         return sInstance;
         }
     }

@@ -1,10 +1,8 @@
 package com.example.todolistapp.viewmodel;
 
 import android.app.Application;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.todolistapp.db.TaskDao;
@@ -20,49 +18,49 @@ import io.reactivex.rxjava3.core.Flowable;
 /*
     タスクのデータをデータレイヤーから取得して保持する
     UIに対して公開する
- */
+*/
 public class TaskViewModel extends AndroidViewModel {
     private TaskDao mTaskDao;
-    private List<TaskEntity> mTasks;
-    public TaskViewModel(@NonNull Application application){
+    private Flowable<List<TaskEntity>> mTasks;
+
+    public TaskViewModel(@NonNull Application application) {
         super(application);
-        mTaskDao = ((AppComponent)application).getDatabase().taskDao();
+        mTaskDao = ((AppComponent) application).getDatabase().taskDao();
+        mTasks = mTaskDao.getAll(); // Flowable でタスクのリストを管理
     }
 
-    public Flowable<List<String>> getTaskTextList(){
-        return mTaskDao.getAll()
-                // taskのリストをstringのリストに変換する
-                .map(tasks -> {
-                    mTasks = tasks;
-                    return tasks.stream()
-                            .map(task -> task.getText())
-                            .collect(Collectors.toList());
-                });
+    public Flowable<List<String>> getTaskTextList() {
+        return mTasks
+                .map(tasks -> tasks.stream()
+                        .map(TaskEntity::getText)
+                        .collect(Collectors.toList()));
     }
 
-    /**
-        @param text タスクのテキスト
-    */
-    public Completable insertTask(String text){
+    public Completable insertTask(String text) {
         TaskEntity task = new TaskEntity();
         task.setText(text);
         return mTaskDao.insert(task);
     }
 
-    // TODO:updateされない
-    public Completable updateTask(int position, String text){
-        TaskEntity task = new TaskEntity();
-        task.setId(position);
-        task.setText(text);
-        System.out.print(task.getText());
-        return mTaskDao.update(task);
+    public Completable updateTask(int position, String text) {
+        return mTasks.firstOrError() // 最新のタスクリストを取得
+                .flatMapCompletable(tasks -> {
+                    if (position < 0 || position >= tasks.size()) {
+                        return Completable.error(new IndexOutOfBoundsException("Invalid position"));
+                    }
+                    TaskEntity task = tasks.get(position);
+                    task.setText(text);
+                    return mTaskDao.update(task);
+                });
     }
 
-    /**
-        @param position 削除したいタスクのリスト内のインデックス
-     */
-    public Completable deleteTask(int position){
-        return mTaskDao.delete(mTasks.get(position));
+    public Completable deleteTask(int position) {
+        return mTasks.firstOrError()
+                .flatMapCompletable(tasks -> {
+                    if (position < 0 || position >= tasks.size()) {
+                        return Completable.error(new IndexOutOfBoundsException("Invalid position"));
+                    }
+                    return mTaskDao.delete(tasks.get(position));
+                });
     }
-
 }

@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "tasks")
 public class TaskEntity {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int mId;
     @ColumnInfo(name = "text")
     private String mText;

@@ -11,8 +11,6 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
-
-
 /*
     タスクのエンティティにアクセスする
     読み取り、追加、削除
@@ -26,6 +24,7 @@ public interface TaskDao {
     @Insert
     Completable insert(TaskEntity task);
 
+    // @Query("UPDATE tasks SET text = :text WHERE id = :taskId")
     @Update
     Completable update(TaskEntity task);
 
