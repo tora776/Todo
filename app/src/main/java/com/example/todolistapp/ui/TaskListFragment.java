@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolistapp.R;
 import com.example.todolistapp.viewmodel.TaskViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -46,9 +47,18 @@ public class TaskListFragment extends Fragment implements TaskListener {
         mAdapter.setUpdateTaskListener(this);
         mTaskListRecyclerView.setAdapter(mAdapter);
 
+        /*
+        // 所属している親アクティビティを取得
+        MainActivity activity = (MainActivity) getActivity();
+        Objects.requireNonNull(activity).setTitle("タスクのカテゴリー");
+        // 戻るボタンを非活性にする
+        activity.setupBackButton(false);
+         */
+
         return view;
     }
 
+    // 開始時処理
     // @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onStart(){
@@ -61,6 +71,7 @@ public class TaskListFragment extends Fragment implements TaskListener {
                         , throwable -> Log.e(TAG, "Unable to read tasks.", throwable)));
     }
 
+    // Delete処理
     @Override
     public void onClickDeleteTask(int position){
         mDisposable.add(mTaskViewModel.deleteTask(position)
@@ -68,10 +79,9 @@ public class TaskListFragment extends Fragment implements TaskListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {}
                         , throwable -> Log.e(TAG, "Unable to delete.", throwable)));
-
     }
 
-    // 動作確認のため削除処理を記載。TODO:Update処理に変更(ダイアログ表示してテキスト変更)
+    // Update処理
     @Override
     public void onClickUpdateTask(int position){
         Bundle args = new Bundle();
