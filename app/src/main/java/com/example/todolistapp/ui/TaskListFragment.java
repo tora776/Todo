@@ -47,13 +47,11 @@ public class TaskListFragment extends Fragment implements TaskListener {
         mAdapter.setUpdateTaskListener(this);
         mTaskListRecyclerView.setAdapter(mAdapter);
 
-        /*
         // 所属している親アクティビティを取得
         MainActivity activity = (MainActivity) getActivity();
         Objects.requireNonNull(activity).setTitle("タスクのカテゴリー");
         // 戻るボタンを非活性にする
         activity.setupBackButton(false);
-         */
 
         return view;
     }
