@@ -17,17 +17,16 @@ import io.reactivex.rxjava3.core.Flowable;
  */
 
 @Dao
-public interface TaskDao {
-    @Query("SELECT * FROM tasks")
-    Flowable<List<TaskEntity>> getAll();
+public interface CategoryDao {
+    @Query("SELECT * FROM Categories")
+    Flowable<List<CategoryEntity>> getAll();
 
     @Insert
-    Completable insert(TaskEntity task);
+    Completable insert(CategoryEntity category);
 
-    // @Query("UPDATE tasks SET text = :text WHERE id = :taskId")
     @Update
-    Completable update(TaskEntity task);
+    Completable update(CategoryEntity category);
 
     @Delete
-    Completable delete(TaskEntity task);
+    Completable delete(CategoryEntity category);
 }

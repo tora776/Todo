@@ -10,11 +10,11 @@ import androidx.room.RoomDatabase;
 /*
   データベースを管理する
  */
-@Database(entities = {TaskEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {CategoryEntity.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance;
     public static final String DATABASE_NAME = "mydb";
-    public abstract TaskDao taskDao();
+    public abstract CategoryDao categoryDao();
 
     public static AppDatabase getInstance(final Context context){
         if(sInstance == null){

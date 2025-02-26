@@ -18,7 +18,7 @@
         />
 
     <Button
-        android:id="@+id/update_task_button"
+        android:id="@+id/update_category_button"
         android:layout_width="24dp"
         android:layout_height="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
         />
 
     <Button
-        android:id="@+id/delete_task_button"
+        android:id="@+id/delete_category_button"
         android:layout_width="24dp"
         android:layout_height="24dp"
         app:layout_constraintEnd_toEndOf="parent"

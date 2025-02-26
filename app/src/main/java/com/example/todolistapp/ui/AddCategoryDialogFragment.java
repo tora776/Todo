@@ -50,7 +50,7 @@ public class AddCategoryDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.fragment_add_category_dialog, null));
 
-        builder.setMessage("タスクの追加")
+        builder.setMessage("カテゴリーの追加")
                 .setPositiveButton("OK", (dialog, id) ->{
                     EditText editText = (EditText) getDialog().findViewById(R.id.add_category_text);
                     if(editText != null){

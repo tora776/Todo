@@ -86,6 +86,6 @@ public class CategoryListFragment extends Fragment implements CategoryListener {
         args.putInt("POSITION", position);
         UpdateCategoryDialogFragment dialog = new UpdateCategoryDialogFragment();
         dialog.setArguments(args);
-        dialog.show(requireActivity().getSupportFragmentManager(), "UpdateTaskDialogFragment");
+        dialog.show(requireActivity().getSupportFragmentManager(), "UpdateCategoryDialogFragment");
     }
 }

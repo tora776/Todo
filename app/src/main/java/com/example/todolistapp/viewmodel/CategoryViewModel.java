@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.todolistapp.db.TaskDao;
-import com.example.todolistapp.db.TaskEntity;
+import com.example.todolistapp.db.CategoryDao;
+import com.example.todolistapp.db.CategoryEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,47 +20,47 @@ import io.reactivex.rxjava3.core.Flowable;
     UIに対して公開する
 */
 public class CategoryViewModel extends AndroidViewModel {
-    private TaskDao mTaskDao;
-    private Flowable<List<TaskEntity>> mTasks;
+    private CategoryDao mCategoryDao;
+    private Flowable<List<CategoryEntity>> mCategories;
 
     public CategoryViewModel(@NonNull Application application) {
         super(application);
-        mTaskDao = ((AppComponent) application).getDatabase().taskDao();
-        mTasks = mTaskDao.getAll(); // Flowable でタスクのリストを管理
+        mCategoryDao = ((AppComponent) application).getDatabase().categoryDao();
+        mCategories = mCategoryDao.getAll(); // Flowable でタスクのリストを管理
     }
 
     public Flowable<List<String>> getCategoryTextList() {
-        return mTasks
-                .map(tasks -> tasks.stream()
-                        .map(TaskEntity::getText)
+        return mCategories
+                .map(categories -> categories.stream()
+                        .map(CategoryEntity::getText)
                         .collect(Collectors.toList()));
     }
 
     public Completable insertCategory(String text) {
-        TaskEntity task = new TaskEntity();
-        task.setText(text);
-        return mTaskDao.insert(task);
+        CategoryEntity category = new CategoryEntity();
+        category.setText(text);
+        return mCategoryDao.insert(category);
     }
 
     public Completable updateCategory(int position, String text) {
-        return mTasks.firstOrError() // 最新のタスクリストを取得
-                .flatMapCompletable(tasks -> {
-                    if (position < 0 || position >= tasks.size()) {
+        return mCategories.firstOrError() // 最新のタスクリストを取得
+                .flatMapCompletable(categories -> {
+                    if (position < 0 || position >= categories.size()) {
                         return Completable.error(new IndexOutOfBoundsException("Invalid position"));
                     }
-                    TaskEntity task = tasks.get(position);
-                    task.setText(text);
-                    return mTaskDao.update(task);
+                    CategoryEntity category = categories.get(position);
+                    category.setText(text);
+                    return mCategoryDao.update(category);
                 });
     }
 
     public Completable deleteCategory(int position) {
-        return mTasks.firstOrError()
-                .flatMapCompletable(tasks -> {
-                    if (position < 0 || position >= tasks.size()) {
+        return mCategories.firstOrError()
+                .flatMapCompletable(categories -> {
+                    if (position < 0 || position >= categories.size()) {
                         return Completable.error(new IndexOutOfBoundsException("Invalid position"));
                     }
-                    return mTaskDao.delete(tasks.get(position));
+                    return mCategoryDao.delete(categories.get(position));
                 });
     }
 }

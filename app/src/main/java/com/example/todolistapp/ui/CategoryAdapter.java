@@ -56,17 +56,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position){
-        holder.getTaskTextView().setText(mData.get(position));
+        holder.getCategoryTextView().setText(mData.get(position));
         // 削除ボタン押下時
-        holder.getDeleteTaskButton().setTag(position);
-        holder.getDeleteTaskButton().setOnClickListener(v -> {
+        holder.getDeleteCategoryButton().setTag(position);
+        holder.getDeleteCategoryButton().setOnClickListener(v -> {
             if (mDeleteListener != null) {
                 mDeleteListener.onClickDeleteCategory(position);
             }
         });
         // 更新ボタン押下時
-        holder.getUpdateTaskButton().setTag(position);
-        holder.getUpdateTaskButton().setOnClickListener(v -> {
+        holder.getUpdateCategoryButton().setTag(position);
+        holder.getUpdateCategoryButton().setOnClickListener(v -> {
             if (mUpdateListener != null){
                 mUpdateListener.onClickUpdateCategory(position);
             }
@@ -92,26 +92,26 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mTaskTextView;
+        private final TextView mCategoryTextView;
         private final Button mDeleteTaskButton;
-        private final Button mUpdateTaskButton;
+        private final Button mUpdateCategoryButton;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            mTaskTextView = (TextView) itemView.findViewById(R.id.category_text);
-            mDeleteTaskButton = (Button) itemView.findViewById(R.id.delete_task_button);
-            mUpdateTaskButton = (Button) itemView.findViewById(R.id.update_task_button);
+            mCategoryTextView = (TextView) itemView.findViewById(R.id.category_text);
+            mDeleteTaskButton = (Button) itemView.findViewById(R.id.delete_category_button);
+            mUpdateCategoryButton = (Button) itemView.findViewById(R.id.update_category_button);
         }
 
-        public TextView getTaskTextView() {
-            return mTaskTextView;
+        public TextView getCategoryTextView() {
+            return mCategoryTextView;
         }
 
-        public Button getDeleteTaskButton() {
+        public Button getDeleteCategoryButton() {
             return mDeleteTaskButton;
         }
 
-        public Button getUpdateTaskButton() {
-            return mUpdateTaskButton;
+        public Button getUpdateCategoryButton() {
+            return mUpdateCategoryButton;
         }
     }
 }

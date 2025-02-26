@@ -22,7 +22,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class UpdateCategoryDialogFragment extends DialogFragment {
-    private final static String TAG = "AddTaskDialogFragment";
+    private final static String TAG = "AddCategoryDialogFragment";
     private CategoryViewModel mCategoryViewModel;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 

@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 
 
 import com.example.todolistapp.db.AppDatabase;
-import com.example.todolistapp.db.TaskDao;
-import com.example.todolistapp.db.TaskEntity;
+import com.example.todolistapp.db.CategoryEntity;
+import com.example.todolistapp.db.CategoryDao;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 @RunWith(AndroidJUnit4.class)
 public class DatabaseReadWriteTest {
-    private TaskDao taskDao;
+    private CategoryDao categoryDao;
     private AppDatabase db;
 
     @Rule
@@ -38,7 +38,7 @@ public class DatabaseReadWriteTest {
     public void createDb(){
         Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
-        taskDao = db.taskDao();
+        categoryDao = db.categoryDao();
     }
 
     @After
@@ -49,26 +49,26 @@ public class DatabaseReadWriteTest {
     @Test
     public void insertTest() {
         // Context of the app under test.
-        TaskEntity task = new TaskEntity();
+        CategoryEntity task = new CategoryEntity();
         task.setId(0);
         task.setText("aaa");
-        taskDao.insert(task).blockingAwait();
+        categoryDao.insert(task).blockingAwait();
 
-        taskDao.getAll()
+        categoryDao.getAll()
                 .test()
                 .assertValue(tasks -> tasks.size() == 1);
     }
 
     @Test
     public void deleteTest(){
-        TaskEntity task = new TaskEntity();
+        CategoryEntity task = new CategoryEntity();
         task.setId(1);
         task.setText("aaa");
-        taskDao.insert(task).blockingAwait();
+        categoryDao.insert(task).blockingAwait();
 
-        taskDao.delete(task).blockingAwait();
+        categoryDao.delete(task).blockingAwait();
 
-        taskDao.getAll()
+        categoryDao.getAll()
                 .test()
                 .assertValue(tasks -> tasks.isEmpty());
     }
