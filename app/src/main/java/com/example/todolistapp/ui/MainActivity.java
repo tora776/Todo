@@ -3,7 +3,6 @@ package com.example.todolistapp.ui;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.add_task_button);
         button.setOnClickListener(view -> {
-            AddTaskDialogFragment dialog = new AddTaskDialogFragment();
+            AddCategoryDialogFragment dialog = new AddCategoryDialogFragment();
             dialog.show(getSupportFragmentManager(), "AddTaskDialogFragment");
         });
         /*

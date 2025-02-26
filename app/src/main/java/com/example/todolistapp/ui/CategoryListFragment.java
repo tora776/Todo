@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolistapp.R;
-import com.example.todolistapp.viewmodel.TaskViewModel;
+import com.example.todolistapp.viewmodel.CategoryViewModel;
 
 import java.util.Objects;
 
@@ -20,11 +20,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
-public class TaskListFragment extends Fragment implements TaskListener {
+public class CategoryListFragment extends Fragment implements CategoryListener {
     private final static String TAG = "TaskListFragment";
-    private RecyclerView mTaskListRecyclerView;
-    private TaskAdapter mAdapter;
-    private TaskViewModel mTaskViewModel;
+    private RecyclerView mCategoryListRecyclerView;
+    private CategoryAdapter mAdapter;
+    private CategoryViewModel mCategoryViewModel;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     // 初期化メソッド
@@ -37,15 +37,15 @@ public class TaskListFragment extends Fragment implements TaskListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        // layoutフォルダのfragment_task_list.xmlを使用する
-        View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+        // layoutフォルダのfragment_category_list.xmlを使用する
+        View view = inflater.inflate(R.layout.fragment_category_list, container, false);
 
-        mTaskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        mTaskListRecyclerView = (RecyclerView) view.findViewById(R.id.task_list_view);
-        mAdapter = new TaskAdapter();
-        mAdapter.setDeleteTaskListener(this);
-        mAdapter.setUpdateTaskListener(this);
-        mTaskListRecyclerView.setAdapter(mAdapter);
+        mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        mCategoryListRecyclerView = (RecyclerView) view.findViewById(R.id.category_list_view);
+        mAdapter = new CategoryAdapter();
+        mAdapter.setDeleteCategoryListener(this);
+        mAdapter.setUpdateCategoryListener(this);
+        mCategoryListRecyclerView.setAdapter(mAdapter);
 
         // 所属している親アクティビティを取得
         MainActivity activity = (MainActivity) getActivity();
@@ -62,7 +62,7 @@ public class TaskListFragment extends Fragment implements TaskListener {
     public void onStart(){
         super.onStart();
         // RecyclerViewに対してテキストのリストを渡している
-        mDisposable.add(mTaskViewModel.getTaskTextList()
+        mDisposable.add(mCategoryViewModel.getCategoryTextList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(textList -> mAdapter.setData(textList)
@@ -71,8 +71,8 @@ public class TaskListFragment extends Fragment implements TaskListener {
 
     // Delete処理
     @Override
-    public void onClickDeleteTask(int position){
-        mDisposable.add(mTaskViewModel.deleteTask(position)
+    public void onClickDeleteCategory(int position){
+        mDisposable.add(mCategoryViewModel.deleteCategory(position)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {}
@@ -81,10 +81,10 @@ public class TaskListFragment extends Fragment implements TaskListener {
 
     // Update処理
     @Override
-    public void onClickUpdateTask(int position){
+    public void onClickUpdateCategory(int position){
         Bundle args = new Bundle();
         args.putInt("POSITION", position);
-        UpdateTaskDialogFragment dialog = new UpdateTaskDialogFragment();
+        UpdateCategoryDialogFragment dialog = new UpdateCategoryDialogFragment();
         dialog.setArguments(args);
         dialog.show(requireActivity().getSupportFragmentManager(), "UpdateTaskDialogFragment");
     }

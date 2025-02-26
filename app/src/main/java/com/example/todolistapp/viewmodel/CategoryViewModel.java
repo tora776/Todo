@@ -19,30 +19,30 @@ import io.reactivex.rxjava3.core.Flowable;
     タスクのデータをデータレイヤーから取得して保持する
     UIに対して公開する
 */
-public class TaskViewModel extends AndroidViewModel {
+public class CategoryViewModel extends AndroidViewModel {
     private TaskDao mTaskDao;
     private Flowable<List<TaskEntity>> mTasks;
 
-    public TaskViewModel(@NonNull Application application) {
+    public CategoryViewModel(@NonNull Application application) {
         super(application);
         mTaskDao = ((AppComponent) application).getDatabase().taskDao();
         mTasks = mTaskDao.getAll(); // Flowable でタスクのリストを管理
     }
 
-    public Flowable<List<String>> getTaskTextList() {
+    public Flowable<List<String>> getCategoryTextList() {
         return mTasks
                 .map(tasks -> tasks.stream()
                         .map(TaskEntity::getText)
                         .collect(Collectors.toList()));
     }
 
-    public Completable insertTask(String text) {
+    public Completable insertCategory(String text) {
         TaskEntity task = new TaskEntity();
         task.setText(text);
         return mTaskDao.insert(task);
     }
 
-    public Completable updateTask(int position, String text) {
+    public Completable updateCategory(int position, String text) {
         return mTasks.firstOrError() // 最新のタスクリストを取得
                 .flatMapCompletable(tasks -> {
                     if (position < 0 || position >= tasks.size()) {
@@ -54,7 +54,7 @@ public class TaskViewModel extends AndroidViewModel {
                 });
     }
 
-    public Completable deleteTask(int position) {
+    public Completable deleteCategory(int position) {
         return mTasks.firstOrError()
                 .flatMapCompletable(tasks -> {
                     if (position < 0 || position >= tasks.size()) {

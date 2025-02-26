@@ -1,6 +1,5 @@
 package com.example.todolistapp.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +20,13 @@ import java.util.List;
 /**
  * リストのデータと画面の表示を紐づける
  */
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     // Taskリストの一覧
     private List<String> mData;
-    private TaskListener mDeleteListener;
-    private TaskListener mUpdateListener;
+    private CategoryListener mDeleteListener;
+    private CategoryListener mUpdateListener;
 
-    public TaskAdapter(){
+    public CategoryAdapter(){
         this.mData = new ArrayList<>();
     }
 
@@ -35,11 +34,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return mData.size();
     }
 
-    public void setDeleteTaskListener(TaskListener listener){
+    public void setDeleteCategoryListener(CategoryListener listener){
         mDeleteListener = listener;
     }
 
-    public void setUpdateTaskListener(TaskListener listener){ mUpdateListener = listener; }
+    public void setUpdateCategoryListener(CategoryListener listener){ mUpdateListener = listener; }
 
     public void setData(List<String> data){
         mData = data;
@@ -50,7 +49,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.task_item, parent, false);
+                .inflate(R.layout.category_item, parent, false);
 
         return new ViewHolder(v);
     }
@@ -62,14 +61,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.getDeleteTaskButton().setTag(position);
         holder.getDeleteTaskButton().setOnClickListener(v -> {
             if (mDeleteListener != null) {
-                mDeleteListener.onClickDeleteTask(position);
+                mDeleteListener.onClickDeleteCategory(position);
             }
         });
         // 更新ボタン押下時
         holder.getUpdateTaskButton().setTag(position);
         holder.getUpdateTaskButton().setOnClickListener(v -> {
             if (mUpdateListener != null){
-                mUpdateListener.onClickUpdateTask(position);
+                mUpdateListener.onClickUpdateCategory(position);
             }
         });
         // タスク押下時
@@ -81,7 +80,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             args.putInt("POSITION", position);
             args.putString("DETAILED_TASK", mData.get(position));
             // Fragmentのインスタンスを作成
-            DetailedTaskListFragment fragment = new DetailedTaskListFragment();
+            DetailedCategoryListFragment fragment = new DetailedCategoryListFragment();
             // タスクのテキストを渡す
             fragment.setArguments(args);
             // Fragmentを追加または置換
@@ -98,7 +97,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         private final Button mUpdateTaskButton;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            mTaskTextView = (TextView) itemView.findViewById(R.id.task_text);
+            mTaskTextView = (TextView) itemView.findViewById(R.id.category_text);
             mDeleteTaskButton = (Button) itemView.findViewById(R.id.delete_task_button);
             mUpdateTaskButton = (Button) itemView.findViewById(R.id.update_task_button);
         }

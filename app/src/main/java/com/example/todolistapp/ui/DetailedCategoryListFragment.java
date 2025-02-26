@@ -14,7 +14,7 @@ import com.example.todolistapp.R;
 
 
 
-public class DetailedTaskListFragment extends Fragment {
+public class DetailedCategoryListFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class DetailedTaskListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detailed_task_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_detailed_category_list, container, false);
 
         // 戻るボタンを活性化
         MainActivity activity = (MainActivity) getActivity();
@@ -37,7 +37,7 @@ public class DetailedTaskListFragment extends Fragment {
         // 値を受け取る
         int position = requireArguments().getInt("POSITION", 0);
         String categoryName = requireArguments().getString("DETAILED_TASK");
-        TextView textView = view.findViewById(R.id.category_text);
+        TextView textView = view.findViewById(R.id.task_text);
         textView.setText(categoryName);
         // Inflate the layout for this fragment
         return view;
