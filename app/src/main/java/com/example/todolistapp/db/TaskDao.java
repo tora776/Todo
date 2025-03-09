@@ -12,21 +12,21 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
 /*
-    カテゴリーのエンティティにアクセスする
+    タスクのエンティティにアクセスする
     読み取り、追加、削除
  */
 
 @Dao
-public interface CategoryDao {
-    @Query("SELECT * FROM categories")
-    Flowable<List<CategoryEntity>> getAll();
+public interface TaskDao {
+    @Query("SELECT * FROM tasks")
+    Flowable<List<TaskEntity>> getAllTask();
 
     @Insert
-    Completable insert(CategoryEntity category);
+    Completable insertTask(TaskEntity task);
 
     @Update
-    Completable update(CategoryEntity category);
+    Completable updateTask(TaskEntity task);
 
     @Delete
-    Completable delete(CategoryEntity category);
+    Completable deleteTask(TaskEntity task);
 }

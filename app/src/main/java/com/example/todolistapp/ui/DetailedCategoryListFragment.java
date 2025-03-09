@@ -24,7 +24,7 @@ public class DetailedCategoryListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detailed_category_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
         // 戻るボタンを活性化
         MainActivity activity = (MainActivity) getActivity();

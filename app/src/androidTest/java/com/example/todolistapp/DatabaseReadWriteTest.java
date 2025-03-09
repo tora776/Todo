@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import com.example.todolistapp.db.AppDatabase;
 import com.example.todolistapp.db.CategoryEntity;
 import com.example.todolistapp.db.CategoryDao;
+import com.example.todolistapp.db.TaskDao;
 
 import java.io.IOException;
 
@@ -29,6 +30,7 @@ import java.io.IOException;
 @RunWith(AndroidJUnit4.class)
 public class DatabaseReadWriteTest {
     private CategoryDao categoryDao;
+    private TaskDao taskDao;
     private AppDatabase db;
 
     @Rule
@@ -39,6 +41,7 @@ public class DatabaseReadWriteTest {
         Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
         categoryDao = db.categoryDao();
+        taskDao = db.taskDao();
     }
 
     @After
