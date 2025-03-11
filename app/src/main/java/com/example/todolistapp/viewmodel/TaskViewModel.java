@@ -29,20 +29,20 @@ public class TaskViewModel extends AndroidViewModel {
         mTasks = mTaskDao.getAllTask(); // Flowable でタスクのリストを管理
     }
 
-    public Flowable<List<String>> getCategoryTextList() {
+    public Flowable<List<String>> getTaskTextList() {
         return mTasks
-                .map(categories -> categories.stream()
+                .map(tasks -> tasks.stream()
                         .map(TaskEntity::getTaskText)
                         .collect(Collectors.toList()));
     }
 
-    public Completable insertCategory(String text) {
+    public Completable insertTask(String text) {
         TaskEntity task = new TaskEntity();
         task.setTaskText(text);
         return mTaskDao.insertTask(task);
     }
 
-    public Completable updateCategory(int position, String text) {
+    public Completable updateTask(int position, String text) {
         return mTasks.firstOrError() // 最新のタスクリストを取得
                 .flatMapCompletable(tasks -> {
                     if (position < 0 || position >= tasks.size()) {
@@ -54,7 +54,7 @@ public class TaskViewModel extends AndroidViewModel {
                 });
     }
 
-    public Completable deleteCategory(int position) {
+    public Completable deleteTask(int position) {
         return mTasks.firstOrError()
                 .flatMapCompletable(tasks -> {
                     if (position < 0 || position >= tasks.size()) {
