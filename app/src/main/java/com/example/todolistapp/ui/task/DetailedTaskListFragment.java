@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.example.todolistapp.R;
 import com.example.todolistapp.ui.MainActivity;
 
-
+/*
 public class DetailedTaskListFragment extends Fragment {
 
     @Override
@@ -55,3 +55,4 @@ public class DetailedTaskListFragment extends Fragment {
         }
     }
 }
+ */

@@ -39,15 +39,28 @@ public class TaskListFragment extends Fragment implements TaskListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        // layoutフォルダのfragment_category_list.xmlを使用する
+        // layoutフォルダのfragment_task_list.xmlを使用する
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
         mTaskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        mTaskListRecyclerView = (RecyclerView) view.findViewById(R.id.category_list_view);
+        mTaskListRecyclerView = (RecyclerView) view.findViewById(R.id.task_list_view);
         mAdapter = new TaskAdapter();
         mAdapter.setDeleteTaskListener(this);
         mAdapter.setUpdateTaskListener(this);
         mTaskListRecyclerView.setAdapter(mAdapter);
+
+        // カテゴリIDと名前を取得
+        Bundle args = getArguments();
+        if (args != null) {
+            int categoryId = args.getInt("CATEGORY_ID", -1);
+            String categoryName = args.getString("CATEGORY_NAME", "タスク");
+
+            // 画面タイトルを変更
+            MainActivity activity = (MainActivity) getActivity();
+            if (activity != null) {
+                activity.setTitle(categoryName);
+            }
+        }
 
         // 所属している親アクティビティを取得
         // MainActivity activity = (MainActivity) getActivity();

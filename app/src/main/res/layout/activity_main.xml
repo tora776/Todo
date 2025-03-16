@@ -9,10 +9,16 @@
 
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/task_list_fragment_view"
+        android:id="@+id/category_list_fragment_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.example.todolistapp.ui.category.CategoryListFragment"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/task_list_fragment_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.todolistapp.ui.task.TaskListFragment"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

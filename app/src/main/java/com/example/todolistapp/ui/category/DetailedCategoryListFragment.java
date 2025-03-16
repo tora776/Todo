@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.todolistapp.R;
 import com.example.todolistapp.ui.MainActivity;
 
-
+/*
 public class DetailedCategoryListFragment extends Fragment {
 
     @Override
@@ -56,3 +56,4 @@ public class DetailedCategoryListFragment extends Fragment {
         }
     }
 }
+ */

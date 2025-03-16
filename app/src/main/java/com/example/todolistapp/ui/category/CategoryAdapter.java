@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolistapp.R;
+import com.example.todolistapp.ui.task.TaskListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,10 +78,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             // タスクのテキストを渡す準備
             Bundle args = new Bundle();
-            args.putInt("POSITION", position);
-            args.putString("DETAILED_TASK", mData.get(position));
+            args.putInt("CATEGORY_ID", position);
+            // args.putString("DETAILED_TASK", mData.get(position));
             // Fragmentのインスタンスを作成
-            DetailedCategoryListFragment fragment = new DetailedCategoryListFragment();
+            TaskListFragment fragment = new TaskListFragment();
             // タスクのテキストを渡す
             fragment.setArguments(args);
             // Fragmentを追加または置換
