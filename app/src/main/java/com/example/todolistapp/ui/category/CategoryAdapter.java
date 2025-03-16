@@ -1,4 +1,4 @@
-package com.example.todolistapp.ui;
+package com.example.todolistapp.ui.category;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

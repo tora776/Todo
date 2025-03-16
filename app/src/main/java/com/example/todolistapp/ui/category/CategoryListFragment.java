@@ -1,4 +1,4 @@
-package com.example.todolistapp.ui;
+package com.example.todolistapp.ui.category;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolistapp.R;
+import com.example.todolistapp.ui.MainActivity;
 import com.example.todolistapp.viewmodel.CategoryViewModel;
 
 import java.util.Objects;

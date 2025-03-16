@@ -1,20 +1,19 @@
-package com.example.todolistapp.ui;
+package com.example.todolistapp.ui.task;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.todolistapp.R;
+import com.example.todolistapp.ui.MainActivity;
 
 
-
-public class DetailedCategoryListFragment extends Fragment {
+public class DetailedTaskListFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,9 +35,9 @@ public class DetailedCategoryListFragment extends Fragment {
 
         // 値を受け取る
         int position = requireArguments().getInt("POSITION", 0);
-        String categoryName = requireArguments().getString("DETAILED_TASK");
+        String taskName = requireArguments().getString("DETAILED_TASK");
         TextView textView = view.findViewById(R.id.task_text);
-        textView.setText(categoryName);
+        textView.setText(taskName);
         // Inflate the layout for this fragment
         return view;
     }

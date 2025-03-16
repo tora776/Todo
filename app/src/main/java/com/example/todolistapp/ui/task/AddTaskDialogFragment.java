@@ -1,4 +1,4 @@
-package com.example.todolistapp.ui;
+package com.example.todolistapp.ui.task;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,17 +15,16 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.todolistapp.R;
-import com.example.todolistapp.viewmodel.CategoryViewModel;
+import com.example.todolistapp.viewmodel.TaskViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class UpdateCategoryDialogFragment extends DialogFragment {
-    private final static String TAG = "AddCategoryDialogFragment";
-    private CategoryViewModel mCategoryViewModel;
+public class AddTaskDialogFragment extends DialogFragment {
+    private final static String TAG = "AddTaskDialogFragment";
+    private TaskViewModel mTaskViewModel;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,10 +34,9 @@ public class UpdateCategoryDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        mTaskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         // Inflate the layout for this fragment
-        // TODO:ダイアログ名修正(Addしていないため)
-        return inflater.inflate(R.layout.fragment_add_category_dialog, container, false);
+        return inflater.inflate(R.layout.fragment_input_dialog, container, false);
     }
 
     @NonNull
@@ -47,23 +45,18 @@ public class UpdateCategoryDialogFragment extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // 値を受け取る
-        int position = requireArguments().getInt("POSITION", 0);
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.fragment_add_category_dialog, null));
+        builder.setView(inflater.inflate(R.layout.fragment_input_dialog, null));
 
-        builder.setMessage("タスクの更新")
-
+        builder.setMessage("カテゴリーの追加")
                 .setPositiveButton("OK", (dialog, id) ->{
                     EditText editText = (EditText) getDialog().findViewById(R.id.add_category_text);
-                    // TODO:ダイアログ表示時、事前にTask名を入力しておく
-                    // editText.setText(getResources().getResourceEntryName(R.id.task_text));
                     if(editText != null){
-                        mDisposable.add(mCategoryViewModel.updateCategory(position, editText.getText().toString())
+                        mDisposable.add(mTaskViewModel.insertTask(editText.getText().toString())
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {}, throwable -> Log.e(TAG, "Unable to update.", throwable)));
+                                .subscribe(() -> {}, throwable -> Log.e(TAG, "Unable to insert.", throwable)));
                     } else {
                         Log.e(TAG, "No text.");
                     }
